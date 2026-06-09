@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NHL Brand Assets Portal</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css">
+  <style>
+    :root {
+      --bg: #f3f3f3;
+      --panel: #ffffff;
+      --panel-2: #fafafa;
+      --line: #d0d0d0;
+      --line-dark: #b7b7b7;
+      --text: #1f1f1f;
+      --muted: #666666;
+      --blue: #0067c0;
+      --blue-soft: #e5f1fb;
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+      --team-1: #0067c0;
+      --team-2: #f4f4f4;
+      --team-3: #ffffff;
+      --team-4: #000000;
+      --asset-scale: 1.35;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    button, input, select, a {
+      font: inherit;
+    }
+
+    button {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      border-radius: 4px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: pointer;
+    }
+
+    button:hover:not(:disabled), .download-link:hover, .small-link:hover, .preview-action:hover {
+      background: var(--blue-soft);
+      border-color: #9bc3e6;
+    }
+
+    button.primary {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+
+    button.primary:hover {
+      filter: brightness(0.95);
+    }
+
+    i[class^="iconoir-"] {
+      font-size: 18px;
+      line-height: 1;
+      vertical-align: -2px;
+    }
+
+    .app {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      height: 46px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      background: #f8f8f8;
+      border-bottom: 1px solid var(--line);
+      flex: 0 0 auto;
+    }
+
+    .window-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      margin-right: 10px;
+      white-space: nowrap;
+    }
+
+    .window-title .square {
+      width: 18px;
+      height: 18px;
+      border-radius: 3px;
+      background: linear-gradient(135deg, var(--team-1), var(--team-2));
+      border: 1px solid rgba(0,0,0,.2);
+    }
+
+    .top-icon-button {
+      width: 34px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .addressbar {
+      min-width: 260px;
+      flex: 1 1 auto;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 4px;
+      color: #333;
+      overflow: hidden;
+    }
+
+    .crumb {
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #333;
+    }
+
+    .crumb:not(:last-child)::after {
+      content: "›";
+      color: #777;
+      margin-left: 2px;
+    }
+
+    .toolbar-select {
+      width: 230px;
+      height: 30px;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 4px;
+      padding: 0 8px;
+    }
+
+    .search-wrap {
+      width: 260px;
+      height: 30px;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 8px;
+    }
+
+    .search-wrap i { color: var(--muted); }
+
+    .searchbox {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      padding: 0;
+    }
+
+    .content {
+      min-height: 0;
+      flex: 1 1 auto;
+      display: grid;
+      grid-template-columns: 270px minmax(0, 1fr);
+    }
+
+    .sidebar {
+      background: #fbfbfb;
+      border-right: 1px solid var(--line);
+      padding: 12px 8px;
+      overflow: auto;
+    }
+
+    .sidebar-section-title {
+      margin: 6px 10px 8px;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: .04em;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tree-item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 9px;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      cursor: pointer;
+      color: #222;
+      background: transparent;
+      text-align: left;
+      min-height: 40px;
+    }
+
+    .tree-item:hover {
+      background: #f0f0f0;
+    }
+
+    .tree-item.active {
+      background: var(--blue-soft);
+      border-color: #bad6ee;
+    }
+
+    .tree-logo {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+      flex: 0 0 32px;
+    }
+
+    .tree-logo img {
+      max-width: 30px;
+      max-height: 30px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      filter: drop-shadow(0 1px 1px rgba(0,0,0,.12));
+    }
+
+    .tree-icon {
+      width: 26px;
+      height: 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 26px;
+      color: #333;
+    }
+
+    .tree-label {
+      flex: 1 1 auto;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .tree-count {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .sidebar-note {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+      padding: 8px 10px;
+    }
+
+    .main {
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      background: var(--panel);
+    }
+
+    .home {
+      min-height: 0;
+      flex: 1 1 auto;
+      overflow: auto;
+      padding: 26px;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.025) 1px, transparent 1px),
+        linear-gradient(rgba(0,0,0,.025) 1px, transparent 1px),
+        #fff;
+      background-size: 28px 28px;
+    }
+
+    .home-hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 20px;
+      padding: 8px 2px 22px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 18px;
+    }
+
+    .home-hero h1 {
+      margin: 0 0 6px;
+      font-size: 28px;
+      font-weight: 650;
+    }
+
+    .home-hero p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .home-hero-count {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .home-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
+      gap: 14px;
+    }
+
+    .team-card {
+      min-height: 126px;
+      display: block;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.96);
+      border-radius: 12px;
+      padding: 18px 15px 14px 72px;
+      cursor: pointer;
+      text-align: right;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .team-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 10px;
+      background: var(--c1, var(--blue));
+      box-shadow: 16px 0 26px rgba(0,0,0,.22);
+      z-index: 4;
+    }
+
+    .team-card:hover {
+      border-color: #9bc3e6;
+      box-shadow: 0 4px 14px rgba(0,0,0,.10);
+      background: #fff;
+    }
+
+    .team-card-logo {
+      position: absolute;
+      left: -62px;
+      bottom: -72px;
+      width: 235px;
+      height: 235px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      pointer-events: none;
+      z-index: 0;
+      opacity: .65;
+    }
+
+    .team-card-logo img {
+      max-width: 230px;
+      max-height: 230px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .team-card-name {
+      position: absolute;
+      top: 25px;
+      right: 15px;
+      left: 84px;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-start;
+      gap: 1px;
+      line-height: 1.04;
+      letter-spacing: .035em;
+      text-transform: uppercase;
+      text-align: right;
+      white-space: normal;
+      overflow: visible;
+      word-break: normal;
+      overflow-wrap: normal;
+    }
+
+    .team-card-place,
+    .team-card-common {
+      display: block;
+      max-width: 100%;
+    }
+
+    .team-card-place {
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: .025em;
+    }
+
+    .team-card-common {
+      font-size: 20px;
+      font-weight: 850;
+      letter-spacing: .04em;
+    }
+
+    .team-card-abv {
+      position: absolute;
+      right: 10px;
+      bottom: -14px;
+      z-index: 3;
+      font-size: 62px;
+      line-height: .78;
+      font-weight: 800;
+      letter-spacing: .12em;
+      color: rgba(0,0,0,.10);
+      pointer-events: none;
+      text-transform: uppercase;
+      max-width: 78%;
+      white-space: nowrap;
+    }
+
+    .folder-header {
+      flex: 0 0 auto;
+      min-height: 92px;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(90deg, rgba(0,0,0,.04), transparent), #fff;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .folder-logo {
+      width: 60px;
+      height: 60px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .folder-logo img {
+      max-width: 52px;
+      max-height: 52px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .folder-title h2 {
+      margin: 0 0 4px;
+      font-size: 22px;
+      font-weight: 650;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .folder-title p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .folder-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .size-control {
+      height: 31px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 0 10px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .size-control input {
+      width: 118px;
+      accent-color: var(--blue);
+    }
+
+    .view-toggle {
+      display: flex;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      overflow: hidden;
+      background: #fff;
+      height: 31px;
+    }
+
+    .view-toggle button {
+      border: 0;
+      border-right: 1px solid var(--line);
+      border-radius: 0;
+      padding: 6px 9px;
+      background: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .view-toggle button:last-child { border-right: 0; }
+    .view-toggle button.active { background: var(--blue-soft); }
+
+    .file-area {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: auto;
+      padding: calc(14px * var(--asset-scale)) calc(18px * var(--asset-scale)) calc(26px * var(--asset-scale));
+      background: #fff;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 18px 0 9px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 7px;
+    }
+
+    .section-heading h3 {
+      margin: 0;
+      font-size: calc(14px * var(--asset-scale));
+      font-weight: 650;
+      display: flex;
+      align-items: center;
+      gap: calc(7px * var(--asset-scale));
+    }
+
+    .section-heading span {
+      color: var(--muted);
+      font-size: calc(12px * var(--asset-scale));
+    }
+
+    .file-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(calc(235px * var(--asset-scale)), 1fr));
+      gap: calc(10px * var(--asset-scale));
+    }
+
+    .file-grid.details {
+      display: block;
+    }
+
+    .file-item {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 5px;
+      min-height: calc(104px * var(--asset-scale));
+      padding: calc(10px * var(--asset-scale));
+      display: grid;
+      grid-template-columns: calc(70px * var(--asset-scale)) minmax(0, 1fr);
+      gap: calc(10px * var(--asset-scale));
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .file-grid.details .file-item {
+      min-height: calc(58px * var(--asset-scale));
+      border-radius: 0;
+      border-left: 0;
+      border-right: 0;
+      border-top: 0;
+      grid-template-columns: calc(58px * var(--asset-scale)) minmax(calc(180px * var(--asset-scale)), 1fr) calc(180px * var(--asset-scale)) calc(250px * var(--asset-scale));
+    }
+
+    .file-grid.details .file-item:first-child {
+      border-top: 1px solid var(--line);
+    }
+
+    .file-item:hover {
+      background: #f6fbff;
+      border-color: #b7d6ee;
+    }
+
+    .preview-box {
+      --checker-base: #ffffff;
+      --checker-tile: #ececec;
+      width: calc(68px * var(--asset-scale));
+      height: calc(68px * var(--asset-scale));
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      background-color: var(--checker-base);
+      background-image:
+        linear-gradient(45deg, var(--checker-tile) 25%, transparent 25%),
+        linear-gradient(-45deg, var(--checker-tile) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, var(--checker-tile) 75%),
+        linear-gradient(-45deg, transparent 75%, var(--checker-tile) 75%);
+      background-size: 14px 14px;
+      background-position: 0 0, 0 7px, 7px -7px, -7px 0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.25);
+    }
+
+    .file-grid.details .preview-box {
+      width: calc(44px * var(--asset-scale));
+      height: calc(44px * var(--asset-scale));
+    }
+
+    .preview-box.dark-preview {
+      --checker-base: #222222;
+      --checker-tile: #353535;
+      border-color: #3c3c3c;
+    }
+
+    .preview-box.light-preview {
+      --checker-base: #ffffff;
+      --checker-tile: #ececec;
+    }
+
+    .preview-box img {
+      max-width: 90%;
+      max-height: 90%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .preview-box .file-icon {
+      font-size: calc(28px * var(--asset-scale));
+      color: #444;
+    }
+
+    .file-info {
+      min-width: 0;
+    }
+
+    .file-name {
+      font-weight: 600;
+      font-size: calc(14px * var(--asset-scale));
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: calc(3px * var(--asset-scale));
+    }
+
+    .file-meta {
+      color: var(--muted);
+      font-size: calc(12px * var(--asset-scale));
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .download-actions {
+      margin-top: calc(8px * var(--asset-scale));
+      display: flex;
+      gap: calc(6px * var(--asset-scale));
+      flex-wrap: wrap;
+    }
+
+    .file-grid.details .download-actions {
+      margin: 0;
+      justify-content: flex-end;
+    }
+
+    .download-link, .small-link, .preview-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: calc(4px * var(--asset-scale));
+      min-height: calc(27px * var(--asset-scale));
+      border: 1px solid var(--line);
+      background: #fff;
+      color: #222;
+      text-decoration: none;
+      border-radius: 4px;
+      padding: calc(4px * var(--asset-scale)) calc(8px * var(--asset-scale));
+      font-size: calc(12px * var(--asset-scale));
+      cursor: pointer;
+    }
+
+    .download-link i,
+    .preview-action i,
+    .small-link i {
+      font-size: calc(15px * var(--asset-scale));
+    }
+
+    .detail-col {
+      color: var(--muted);
+      font-size: calc(12px * var(--asset-scale));
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .color-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(calc(210px * var(--asset-scale)), 1fr));
+      gap: calc(10px * var(--asset-scale));
+    }
+
+    .color-card {
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .color-swatch {
+      height: calc(72px * var(--asset-scale));
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      background: var(--swatch, #fff);
+    }
+
+    .color-swatch::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(0,0,0,.08);
+    }
+
+    .color-info {
+      padding: calc(10px * var(--asset-scale));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: calc(10px * var(--asset-scale));
+    }
+
+    .color-name {
+      font-weight: 600;
+      font-size: calc(13px * var(--asset-scale));
+    }
+
+    .color-hex {
+      color: var(--muted);
+      font-size: calc(12px * var(--asset-scale));
+      margin-top: calc(2px * var(--asset-scale));
+    }
+
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .info-table th,
+    .info-table td {
+      border-bottom: 1px solid var(--line);
+      padding: calc(9px * var(--asset-scale)) calc(10px * var(--asset-scale));
+      text-align: left;
+      vertical-align: top;
+      font-size: calc(13px * var(--asset-scale));
+    }
+
+    .info-table th {
+      width: calc(260px * var(--asset-scale));
+      background: #f7f7f7;
+      font-weight: 600;
+    }
+
+    .file-area button {
+      min-height: calc(27px * var(--asset-scale));
+      padding: calc(4px * var(--asset-scale)) calc(8px * var(--asset-scale));
+      font-size: calc(12px * var(--asset-scale));
+    }
+
+    .file-item, .color-card, .info-table, .download-link, .small-link {
+      transition: font-size .12s ease, padding .12s ease, min-height .12s ease;
+    }
+
+    .statusbar {
+      height: 30px;
+      border-top: 1px solid var(--line);
+      background: #f8f8f8;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      color: var(--muted);
+      font-size: 12px;
+      flex: 0 0 auto;
+    }
+
+    .empty-state, .loading, .error {
+      margin: 34px auto;
+      max-width: 560px;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 6px;
+      padding: 22px;
+      text-align: center;
+      box-shadow: 0 3px 12px rgba(0,0,0,.06);
+    }
+
+    .error {
+      border-color: #f0b4b4;
+      background: #fff7f7;
+      color: #7a1f1f;
+    }
+
+    .font-preview {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      color: #111;
+      font-size: calc(20px * var(--asset-scale));
+      font-weight: 700;
+      letter-spacing: .04em;
+      white-space: nowrap;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 50;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .preview-modal {
+      width: min(1000px, 96vw);
+      height: min(720px, 92vh);
+      background: #fff;
+      border: 1px solid var(--line-dark);
+      box-shadow: 0 20px 60px rgba(0,0,0,.28);
+      border-radius: 8px;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+    }
+
+    .preview-modal-header,
+    .preview-modal-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      background: #f8f8f8;
+    }
+
+    .preview-modal-footer {
+      border-top: 1px solid var(--line);
+      border-bottom: 0;
+    }
+
+    .modal-title {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 650;
+    }
+
+    .modal-title span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .modal-close {
+      width: 32px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .modal-preview-area {
+      --modal-checker-base: #ffffff;
+      --modal-checker-tile: #eeeeee;
+      min-height: 0;
+      overflow: auto;
+      padding: 18px;
+      background-color: var(--modal-checker-base);
+      background-image:
+        linear-gradient(45deg, var(--modal-checker-tile) 25%, transparent 25%),
+        linear-gradient(-45deg, var(--modal-checker-tile) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, var(--modal-checker-tile) 75%),
+        linear-gradient(-45deg, transparent 75%, var(--modal-checker-tile) 75%);
+      background-size: 22px 22px;
+      background-position: 0 0, 0 11px, 11px -11px, -11px 0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-preview-area.dark {
+      --modal-checker-base: #202020;
+      --modal-checker-tile: #333333;
+    }
+
+    .modal-preview-area.light {
+      --modal-checker-base: #ffffff;
+      --modal-checker-tile: #eeeeee;
+    }
+
+    .modal-preview-area img {
+      max-width: 94%;
+      max-height: 94%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .modal-font-preview {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(12px, 4vw, 48px);
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: #111;
+      font-size: clamp(38px, 8vw, 104px);
+      line-height: 1;
+      letter-spacing: .03em;
+      white-space: nowrap;
+      overflow: visible;
+      text-align: center;
+    }
+
+    .modal-downloads {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .modal-description {
+      color: var(--muted);
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 950px) {
+      body { overflow: auto; }
+      .app { min-height: 100vh; height: auto; }
+      .content { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .topbar { flex-wrap: wrap; height: auto; }
+      .toolbar-select, .search-wrap { width: 100%; }
+      .folder-header { grid-template-columns: auto 1fr; }
+      .folder-actions { grid-column: 1 / -1; justify-content: flex-start; }
+      .file-grid.details .file-item { grid-template-columns: 52px 1fr; }
+      .file-grid.details .detail-col { display: none; }
+      .file-grid.details .download-actions { justify-content: flex-start; margin-top: 8px; }
+      .home-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+      .team-card-name { left: 88px; }
+      .team-card-place { font-size: 12px; }
+      .team-card-common { font-size: 17px; }
+      .preview-modal { height: 88vh; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="window-title"><span class="square"></span><span>NHL Brand Portal</span></div>
+      <button id="homeBtn" class="top-icon-button" title="Home"><i class="iconoir-home"></i></button>
+      <button id="backBtn" class="top-icon-button" title="Back"><i class="iconoir-nav-arrow-left"></i></button>
+      <div class="addressbar" id="addressbar"></div>
+      <select id="teamSelect" class="toolbar-select" title="Choose a team"></select>
+      <div class="search-wrap"><i class="iconoir-search"></i><input id="searchInput" class="searchbox" type="search" placeholder="Search assets" /></div>
+    </div>
+
+    <div class="content">
+      <aside class="sidebar">
+        <div id="sidebarContent"></div>
+      </aside>
+
+      <main class="main" id="main"></main>
+    </div>
+
+    <div class="statusbar">
+      <span id="statusLeft">Loading…</span>
+      <span id="statusRight"></span>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="previewBackdrop" aria-hidden="true">
+    <div class="preview-modal" role="dialog" aria-modal="true" aria-labelledby="previewTitle">
+      <div class="preview-modal-header">
+        <div class="modal-title"><i class="iconoir-eye"></i><span id="previewTitle">Preview</span></div>
+        <button class="modal-close" id="previewClose" title="Close preview"><i class="iconoir-xmark"></i></button>
+      </div>
+      <div class="modal-preview-area" id="previewArea"></div>
+      <div class="preview-modal-footer">
+        <div class="modal-description" id="previewDescription"></div>
+        <div class="modal-downloads" id="previewDownloads"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /**********************************************************************
+     * CONFIGURATION
+     * Change this value only if you redeploy your Apps Script web app.
+     **********************************************************************/
+    const DATA_URL = "https://script.google.com/macros/s/AKfycbyWe2S0fVrNtOp3kw1a6yVx4d74e7G8_TVb4hHQEACrT5cMP15ZSoxxJWAiT75qckeDWA/exec";
+
+    const DEFAULT_ASSET_SCALE = 1.35;
+
+    const state = {
+      teams: [],
+      currentTeam: null,
+      page: "home",
+      view: localStorage.getItem("nhlBrandPortalView") || "grid",
+      search: "",
+      backStack: [],
+      recentTeams: readRecentTeams(),
+      assetScale: Number(localStorage.getItem("nhlBrandPortalAssetScale") || DEFAULT_ASSET_SCALE)
+    };
+
+    const labels = {
+      teamAbv: "Abbreviation",
+      teamFullName: "Full name",
+      teamPlaceName: "Location",
+      teamCommonName: "Common name",
+      teamInstagramUsername: "Instagram",
+      teamOfficialHashtag: "Official hashtag",
+      teamNickname: "Nickname"
+    };
+
+    const els = {
+      main: document.getElementById("main"),
+      sidebarContent: document.getElementById("sidebarContent"),
+      addressbar: document.getElementById("addressbar"),
+      teamSelect: document.getElementById("teamSelect"),
+      searchInput: document.getElementById("searchInput"),
+      homeBtn: document.getElementById("homeBtn"),
+      backBtn: document.getElementById("backBtn"),
+      statusLeft: document.getElementById("statusLeft"),
+      statusRight: document.getElementById("statusRight"),
+      previewBackdrop: document.getElementById("previewBackdrop"),
+      previewClose: document.getElementById("previewClose"),
+      previewTitle: document.getElementById("previewTitle"),
+      previewArea: document.getElementById("previewArea"),
+      previewDescription: document.getElementById("previewDescription"),
+      previewDownloads: document.getElementById("previewDownloads")
+    };
+
+    init();
+
+    async function init() {
+      bindEvents();
+      renderLoading();
+      applyAssetScale();
+      try {
+        const data = await fetchData();
+        state.teams = normalizeTeams(data).sort((a, b) => getTeamName(a).localeCompare(getTeamName(b), "en"));
+
+        if (!state.teams.length) {
+          renderError("No teams were found in the database.");
+          return;
+        }
+
+        populateTeamSelect();
+        preloadTeamLogos();
+        const savedTeam = localStorage.getItem("nhlBrandPortalTeam");
+        state.currentTeam = state.teams.find(t => getTeamKey(t) === savedTeam) || null;
+        goHome(false);
+      } catch (error) {
+        console.error(error);
+        renderError("The database could not be loaded. Make sure the Apps Script web app is public and returns valid JSON.", error.message);
+      }
+    }
+
+    function bindEvents() {
+      els.homeBtn.addEventListener("click", () => goHome(true));
+      els.backBtn.addEventListener("click", goBack);
+
+      els.teamSelect.addEventListener("change", () => {
+        const team = state.teams.find(t => getTeamKey(t) === els.teamSelect.value);
+        if (team) openTeam(team);
+      });
+
+      els.searchInput.addEventListener("input", () => {
+        state.search = els.searchInput.value.trim().toLowerCase();
+        render();
+      });
+
+      document.addEventListener("click", (event) => {
+        const teamButton = event.target.closest("[data-team]");
+        if (teamButton) {
+          const team = state.teams.find(t => getTeamKey(t) === teamButton.dataset.team);
+          if (team) openTeam(team);
+        }
+
+        const copyButton = event.target.closest("[data-copy]");
+        if (copyButton) copyToClipboard(copyButton.dataset.copy, copyButton);
+
+        const viewButton = event.target.closest("[data-view]");
+        if (viewButton) {
+          state.view = viewButton.dataset.view;
+          localStorage.setItem("nhlBrandPortalView", state.view);
+          render();
+        }
+
+        const previewTarget = event.target.closest("[data-preview-id]");
+        if (previewTarget && !event.target.closest("a, button, input, select, textarea")) {
+          openPreview(previewTarget.dataset.previewId);
+        }
+      });
+
+      document.addEventListener("input", (event) => {
+        const sizeSlider = event.target.closest("#assetSizeSlider");
+        if (!sizeSlider) return;
+        state.assetScale = Number(sizeSlider.value) / 100;
+        localStorage.setItem("nhlBrandPortalAssetScale", String(state.assetScale));
+        applyAssetScale();
+        
+      });
+
+      els.previewClose.addEventListener("click", closePreview);
+      els.previewBackdrop.addEventListener("click", (event) => {
+        if (event.target === els.previewBackdrop) closePreview();
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && els.previewBackdrop.classList.contains("open")) closePreview();
+      });
+    }
+
+    async function fetchData() {
+      const response = await fetch(DATA_URL, { cache: "no-store" });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const text = await response.text();
+      try {
+        return JSON.parse(text);
+      } catch (error) {
+        throw new Error("The received response is not valid JSON.");
+      }
+    }
+
+    function normalizeTeams(raw) {
+      let rows = [];
+
+      if (Array.isArray(raw)) {
+        rows = raw;
+      } else if (raw && Array.isArray(raw.data)) {
+        rows = raw.data;
+      } else if (raw && Array.isArray(raw.rows)) {
+        rows = raw.rows;
+      } else if (raw && Array.isArray(raw.items)) {
+        rows = raw.items;
+      } else if (raw && typeof raw === "object" && raw.teamAbv) {
+        rows = [raw];
+      }
+
+      if (!rows.length && raw && Array.isArray(raw.values)) {
+        rows = valuesToObjects(raw.values);
+      }
+
+      return rows
+        .filter(row => row && typeof row === "object")
+        .map(cleanRow)
+        .filter(row => row.teamAbv || row.teamFullName);
+    }
+
+    function valuesToObjects(values) {
+      const headers = values[0] || [];
+      return values.slice(1).map(row => {
+        const obj = {};
+        headers.forEach((header, index) => obj[header] = row[index]);
+        return obj;
+      });
+    }
+
+    function cleanRow(row) {
+      const cleaned = {};
+      Object.keys(row).forEach(key => {
+        const value = row[key];
+        cleaned[String(key).trim()] = typeof value === "string" ? value.trim() : value;
+      });
+      return cleaned;
+    }
+
+    function populateTeamSelect() {
+      els.teamSelect.innerHTML = state.teams.map(team => {
+        const key = escapeAttr(getTeamKey(team));
+        const name = escapeHtml(getTeamName(team));
+        return `<option value="${key}">${name}</option>`;
+      }).join("");
+    }
+
+    function openTeam(team, pushHistory = true) {
+      if (pushHistory) state.backStack.push(state.page);
+      state.currentTeam = team;
+      state.page = "team";
+      state.search = "";
+      els.searchInput.value = "";
+      localStorage.setItem("nhlBrandPortalTeam", getTeamKey(team));
+      addRecentTeam(getTeamKey(team));
+      render();
+    }
+
+    function goHome(pushHistory = true) {
+      if (pushHistory && state.page !== "home") state.backStack.push(state.page);
+      state.page = "home";
+      state.search = "";
+      els.searchInput.value = "";
+      render();
+    }
+
+    function goBack() {
+      const previous = state.backStack.pop();
+      if (previous === "team" && state.currentTeam) {
+        state.page = "team";
+      } else {
+        state.page = "home";
+      }
+      state.search = "";
+      els.searchInput.value = "";
+      render();
+    }
+
+    function render() {
+      applyTeamTheme();
+      applyAssetScale();
+      updateAddressbar();
+      renderSidebar();
+      syncTeamSelect();
+
+      if (state.page === "home" || !state.currentTeam) {
+        renderHome();
+      } else {
+        renderTeamPage();
+      }
+    }
+
+    function renderLoading() {
+      els.main.innerHTML = `<div class="loading"><h2>Loading portal…</h2><p>Teams and assets are being prepared.</p></div>`;
+    }
+
+    function renderError(message, details = "") {
+      els.main.innerHTML = `<div class="error"><h2>Error</h2><p>${escapeHtml(message)}</p>${details ? `<p><small>${escapeHtml(details)}</small></p>` : ""}</div>`;
+      els.statusLeft.textContent = "Loading error";
+      els.statusRight.textContent = "";
+    }
+
+    function renderHome() {
+      const cards = state.teams.map(team => {
+        const c1 = toHex(team.teamColor1) || "#0067c0";
+        const logo = getTeamDisplayLogo(team);
+        const abv = team.teamAbv || "";
+        const placeName = team.teamPlaceName || getTeamName(team).replace(team.teamCommonName || "", "").trim() || getTeamName(team);
+        const commonName = team.teamCommonName || team.teamAbv || "";
+        return `
+          <button class="team-card" data-team="${escapeAttr(getTeamKey(team))}" style="--c1:${escapeAttr(c1)}">
+            <span class="team-card-logo">${renderTeamLogoImage(team, "team-card-logo-img", "eager")}</span>
+            <span class="team-card-name"><span class="team-card-place">${escapeHtml(placeName)}</span><span class="team-card-common">${escapeHtml(commonName)}</span></span>
+            <span class="team-card-abv">${escapeHtml(abv)}</span>
+          </button>
+        `;
+      }).join("");
+
+      els.main.innerHTML = `
+        <section class="home">
+          <div class="home-hero">
+            <div>
+              <h1>NHL Brand Assets Portal</h1>
+              <p>Choose a team to browse its colors, logos, wordmarks and font files.</p>
+            </div>
+            <div class="home-hero-count"><i class="iconoir-folder"></i>${state.teams.length} teams</div>
+          </div>
+          <div class="home-grid">${cards}</div>
+        </section>
+      `;
+      els.statusLeft.textContent = `${state.teams.length} teams available`;
+      els.statusRight.textContent = "Home";
+    }
+
+    function renderTeamPage() {
+      const team = state.currentTeam;
+      const assets = getAssets(team);
+      const groups = getAssetGroups(assets);
+      const logo = getTeamDisplayLogo(team);
+      const sections = [
+        renderOverview(team, assets),
+        renderColors(team),
+        ...groups.map(group => renderAssetSection(group))
+      ].join("");
+      const totalFiles = assets.all.length;
+
+      els.main.innerHTML = `
+        <div class="folder-header">
+          <div class="folder-logo">${renderTeamLogoImage(team, "folder-logo-img", "eager")}</div>
+          <div class="folder-title">
+            <h2>${escapeHtml(getTeamName(team))}</h2>
+            <p>${escapeHtml(team.teamAbv || "")}${team.teamNickname ? ` · ${escapeHtml(team.teamNickname)}` : ""}${team.teamOfficialHashtag ? ` · ${escapeHtml(team.teamOfficialHashtag)}` : ""} · All brand assets</p>
+          </div>
+          <div class="folder-actions">
+            <label class="size-control" title="Adjust asset size">
+              <i class="iconoir-enlarge"></i>
+              <input id="assetSizeSlider" type="range" min="80" max="320" step="5" value="${Math.round(state.assetScale * 100)}">
+            </label>
+            <div class="view-toggle" title="View mode">
+              <button data-view="grid" class="${state.view === "grid" ? "active" : ""}"><i class="iconoir-view-grid"></i>Icons</button>
+              <button data-view="details" class="${state.view === "details" ? "active" : ""}"><i class="iconoir-list"></i>Details</button>
+            </div>
+          </div>
+        </div>
+        <div class="file-area">
+          ${sections}
+        </div>
+      `;
+
+      els.statusLeft.textContent = `${totalFiles} asset${totalFiles === 1 ? "" : "s"}`;
+      els.statusRight.textContent = `${team.teamAbv || ""} · All elements`;
+    }
+
+    function renderOverview(team, assets) {
+      const rows = Object.keys(labels)
+        .filter(key => valueExists(team[key]))
+        .map(key => `
+          <tr>
+            <th>${escapeHtml(labels[key])}</th>
+            <td>${key === "teamInstagramUsername" ? renderInstagram(team[key]) : escapeHtml(team[key])}</td>
+          </tr>
+        `).join("");
+
+      const colorText = getColors(team).map(c => c.hex).join(", ");
+      const rowsWithExtras = `
+        ${rows}
+        ${colorText ? `<tr><th>Colors</th><td>${escapeHtml(colorText)}</td></tr>` : ""}
+        <tr><th>Detected files</th><td>${assets.all.length}</td></tr>
+      `;
+
+      return `
+        <div class="section-heading"><h3><i class="iconoir-info-circle"></i>General information</h3><span>Team metadata</span></div>
+        <table class="info-table"><tbody>${rowsWithExtras}</tbody></table>
+      `;
+    }
+
+    function renderInstagram(username) {
+      const clean = String(username || "").replace(/^@/, "");
+      return `<a class="small-link" href="https://www.instagram.com/${escapeAttr(clean)}/" target="_blank" rel="noopener"><i class="iconoir-instagram"></i>@${escapeHtml(clean)}</a>`;
+    }
+
+    function renderColors(team) {
+      const colors = getColors(team);
+      if (!colors.length) return renderEmpty("No colors are available for this team.");
+
+      return `
+        <div class="section-heading"><h3><i class="iconoir-palette"></i>Color palette</h3><span>${colors.length} color${colors.length > 1 ? "s" : ""}</span></div>
+        <div class="color-row">
+          ${colors.map(color => `
+            <div class="color-card">
+              <div class="color-swatch" style="--swatch:${escapeAttr(color.hex)}"></div>
+              <div class="color-info">
+                <div>
+                  <div class="color-name">${escapeHtml(color.label)}</div>
+                  <div class="color-hex">${escapeHtml(color.hex)}</div>
+                </div>
+                <button data-copy="${escapeAttr(color.hex)}"><i class="iconoir-copy"></i>Copy</button>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function renderAssetSection(group) {
+      const items = filterItems(group.items);
+      if (!items.length) return "";
+      return `
+        <div class="section-heading"><h3><i class="${escapeAttr(group.icon)}"></i>${escapeHtml(group.label)}</h3><span>${items.length} item${items.length > 1 ? "s" : ""}</span></div>
+        <div class="file-grid ${state.view === "details" ? "details" : ""}">
+          ${items.map(item => renderFileItem(item)).join("")}
+        </div>
+      `;
+    }
+
+    function renderFileItem(item) {
+      const previewClass = item.background === "dark" ? "dark-preview" : item.background === "light" ? "light-preview" : "";
+      const preview = item.kind === "font"
+        ? `<div class="font-preview" style="${item.fontUrl ? `font-family:'${escapeAttr(item.fontFamily)}', Segoe UI, sans-serif;` : ""}">123</div>${renderFontFace(item)}`
+        : item.previewUrl
+          ? `<img src="${escapeAttr(item.previewUrl)}" alt="" loading="lazy" decoding="async">`
+          : `<span class="file-icon"><i class="${escapeAttr(item.iconClass || "iconoir-page")}"></i></span>`;
+
+      const previewHint = item.kind === "font" ? "Click to preview font" : "Click to preview asset";
+      const buttons = item.files.map(file => `
+        <a class="download-link" href="${escapeAttr(file.url)}" target="_blank" rel="noopener" download>
+          <i class="iconoir-download"></i>${escapeHtml(file.label)}
+        </a>
+      `).join("");
+
+      if (state.view === "details") {
+        return `
+          <div class="file-item" data-preview-id="${escapeAttr(item.id)}" title="${escapeAttr(previewHint)}">
+            <div class="preview-box ${previewClass}">${preview}</div>
+            <div class="file-info">
+              <div class="file-name" title="${escapeAttr(item.name)}">${escapeHtml(item.name)}</div>
+              <div class="file-meta">${escapeHtml(item.description || "")}</div>
+            </div>
+            <div class="detail-col">${escapeHtml(item.typeLabel || "File")}</div>
+            <div class="download-actions">${buttons}</div>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="file-item" data-preview-id="${escapeAttr(item.id)}" title="${escapeAttr(previewHint)}">
+          <div class="preview-box ${previewClass}">${preview}</div>
+          <div class="file-info">
+            <div class="file-name" title="${escapeAttr(item.name)}">${escapeHtml(item.name)}</div>
+            <div class="file-meta">${escapeHtml(item.typeLabel || "File")}</div>
+            <div class="download-actions">${buttons}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderEmpty(text = "No item matches your search.") {
+      return `<div class="empty-state"><h3>Empty folder</h3><p>${escapeHtml(text)}</p></div>`;
+    }
+
+    function renderSidebar() {
+      if (state.page === "home" || !state.currentTeam) {
+        renderRecentSidebar();
+      } else {
+        renderTeamSidebar();
+      }
+    }
+
+    function renderRecentSidebar() {
+      const recent = state.recentTeams
+        .map(key => state.teams.find(team => getTeamKey(team) === key))
+        .filter(Boolean);
+
+      els.sidebarContent.innerHTML = `
+        <div class="sidebar-section-title"><i class="iconoir-clock"></i>Recent teams</div>
+        ${recent.length ? recent.map(team => renderTeamTreeItem(team, false)).join("") : `<div class="sidebar-note">No recently viewed team yet. Choose a team from the home page to build your history.</div>`}
+      `;
+    }
+
+    function renderTeamSidebar() {
+      els.sidebarContent.innerHTML = `
+        <div class="sidebar-section-title"><i class="iconoir-tournament"></i>Teams</div>
+        ${state.teams.map(team => renderTeamTreeItem(team, getTeamKey(team) === getTeamKey(state.currentTeam))).join("")}
+      `;
+    }
+
+    function renderTeamTreeItem(team, active) {
+      const logo = getTeamDisplayLogo(team);
+      return `
+        <button class="tree-item ${active ? "active" : ""}" data-team="${escapeAttr(getTeamKey(team))}">
+          <span class="tree-logo">${renderTeamLogoImage(team, "tree-logo-img", "eager")}</span>
+          <span class="tree-label">${escapeHtml(getTeamName(team))}</span>
+          ${team.teamAbv ? `<span class="tree-count">${escapeHtml(team.teamAbv)}</span>` : ""}
+        </button>
+      `;
+    }
+
+    function updateAddressbar() {
+      const crumbs = ["Brand Portal"];
+      if (state.page === "home" || !state.currentTeam) {
+        crumbs.push("Home");
+      } else {
+        crumbs.push(getTeamName(state.currentTeam));
+        crumbs.push("All elements");
+      }
+      els.addressbar.innerHTML = crumbs.map(crumb => `<span class="crumb">${escapeHtml(crumb)}</span>`).join("");
+    }
+
+    function syncTeamSelect() {
+      els.teamSelect.disabled = !state.teams.length;
+      if (state.currentTeam) {
+        els.teamSelect.value = getTeamKey(state.currentTeam);
+      }
+    }
+
+    function applyTeamTheme() {
+      const team = state.currentTeam || {};
+      document.documentElement.style.setProperty("--team-1", toHex(team.teamColor1) || "#0067c0");
+      document.documentElement.style.setProperty("--team-2", toHex(team.teamColor2) || "#f4f4f4");
+      document.documentElement.style.setProperty("--team-3", toHex(team.teamColor3) || "#ffffff");
+      document.documentElement.style.setProperty("--team-4", toHex(team.teamColor4) || "#000000");
+    }
+
+    function applyAssetScale() {
+      const scale = Number.isFinite(state.assetScale) && state.assetScale > 0 ? state.assetScale : DEFAULT_ASSET_SCALE;
+      document.documentElement.style.setProperty("--asset-scale", scale.toFixed(2));
+    }
+
+    function getAssetGroups(assets) {
+      return [
+        { label: "Logos", icon: "iconoir-media-image", items: assets.logos },
+        { label: "Wordmarks", icon: "iconoir-text", items: assets.wordmarks },
+        { label: "Fonts", icon: "iconoir-type", items: assets.fonts }
+      ].filter(group => group.items.length);
+    }
+
+    function filterItems(items) {
+      if (!state.search) return items;
+      return items.filter(item => {
+        const haystack = [item.name, item.description, item.typeLabel, ...item.files.map(f => f.label)].join(" ").toLowerCase();
+        return haystack.includes(state.search);
+      });
+    }
+
+    function getAssets(team) {
+      const logos = [];
+      const wordmarks = [];
+      const fonts = [];
+      const teamKey = getTeamKey(team);
+
+      addBundle(logos, team, {
+        id: `${teamKey}-logo-primary-light`,
+        name: "Primary logo — light background",
+        description: "Primary team logo, version for light backgrounds.",
+        typeLabel: "PNG / SVG",
+        background: "light",
+        fields: { PNG: "logoPrimaryLightPNG", SVG: "logoPrimaryLightSVG" }
+      });
+
+      addBundle(logos, team, {
+        id: `${teamKey}-logo-primary-dark`,
+        name: "Primary logo — dark background",
+        description: "Primary team logo, version for dark backgrounds.",
+        typeLabel: "PNG / SVG",
+        background: "dark",
+        fields: { PNG: "logoPrimaryDarkPNG", SVG: "logoPrimaryDarkSVG" }
+      });
+
+      for (let i = 1; i <= 6; i++) {
+        addBundle(logos, team, {
+          id: `${teamKey}-logo-alt-${i}`,
+          name: `Alternate logo ${i}`,
+          description: `Alternate team logo ${i}.`,
+          typeLabel: "PNG / SVG",
+          fields: { PNG: `logoAlternate${i}PNG`, SVG: `logoAlternate${i}SVG` }
+        });
+      }
+
+      addBundle(wordmarks, team, {
+        id: `${teamKey}-wordmark-primary-light`,
+        name: "Primary wordmark — light background",
+        description: "Primary wordmark, version for light backgrounds.",
+        typeLabel: "PNG / SVG",
+        background: "light",
+        fields: { PNG: "wordmarkPrimaryLightPNG", SVG: "wordmarkPrimaryLightSVG" }
+      });
+
+      for (let i = 1; i <= 3; i++) {
+        addBundle(wordmarks, team, {
+          id: `${teamKey}-wordmark-primary-dark-${i}`,
+          name: `Primary wordmark — dark background ${i}`,
+          description: `Primary wordmark, dark background version ${i}.`,
+          typeLabel: "PNG / SVG",
+          background: "dark",
+          fields: { PNG: `wordmarkPrimaryDark-${i}PNG`, SVG: `wordmarkPrimaryDark-${i}SVG` }
+        });
+      }
+
+      for (let i = 1; i <= 3; i++) {
+        addBundle(wordmarks, team, {
+          id: `${teamKey}-wordmark-alt-${i}-light`,
+          name: `Alternate wordmark ${i} — light background`,
+          description: `Alternate wordmark ${i}, version for light backgrounds.`,
+          typeLabel: "PNG / SVG",
+          background: "light",
+          fields: { PNG: `wordmarkAlternate${i}LightPNG`, SVG: `wordmarkAlternate${i}LightSVG` }
+        });
+
+        addBundle(wordmarks, team, {
+          id: `${teamKey}-wordmark-alt-${i}-dark`,
+          name: `Alternate wordmark ${i} — dark background`,
+          description: `Alternate wordmark ${i}, version for dark backgrounds.`,
+          typeLabel: "PNG / SVG",
+          background: "dark",
+          fields: { PNG: `wordmarkAlternate${i}DarkPNG`, SVG: `wordmarkAlternate${i}DarkSVG` }
+        });
+      }
+
+      const fontFiles = [
+        { label: "TTF", key: "fontUrlTTF" },
+        { label: "WOFF", key: "fontUrlWOFF" },
+        { label: "WOFF2", key: "fontUrlWOFF2" }
+      ].filter(file => valueExists(team[file.key])).map(file => ({ label: file.label, url: team[file.key] }));
+
+      if (fontFiles.length) {
+        const fontUrl = firstUrl(team.fontUrlWOFF2, team.fontUrlWOFF, team.fontUrlTTF);
+        fonts.push({
+          id: `${teamKey}-official-font`,
+          kind: "font",
+          name: "Official font",
+          description: "Official number font used on jerseys and selected communications.",
+          typeLabel: fontFiles.map(f => f.label).join(" / "),
+          iconClass: "iconoir-type",
+          fontUrl,
+          fontFamily: `NHLBrandFont_${escapeCss(teamKey)}`,
+          files: fontFiles
+        });
+      }
+
+      const all = [...logos, ...wordmarks, ...fonts];
+      return { logos, wordmarks, fonts, all };
+    }
+
+    function addBundle(target, team, config) {
+      const files = Object.entries(config.fields)
+        .filter(([, key]) => valueExists(team[key]))
+        .map(([label, key]) => ({ label, url: team[key] }));
+
+      if (!files.length) return;
+
+      const previewUrl = firstUrl(
+        config.fields.PNG ? team[config.fields.PNG] : null,
+        config.fields.SVG ? team[config.fields.SVG] : null
+      );
+
+      target.push({
+        id: config.id,
+        kind: "image",
+        name: config.name,
+        description: config.description,
+        typeLabel: files.map(f => f.label).join(" / "),
+        background: config.background || "checker",
+        previewUrl,
+        files
+      });
+    }
+
+    function openPreview(itemId) {
+      if (!state.currentTeam) return;
+      const item = getAssets(state.currentTeam).all.find(asset => asset.id === itemId);
+      if (!item) return;
+
+      els.previewTitle.textContent = item.name;
+      els.previewDescription.textContent = `${item.typeLabel || "File"}${item.description ? ` · ${item.description}` : ""}`;
+      els.previewArea.className = "modal-preview-area";
+      els.previewArea.style.backgroundImage = "";
+      els.previewArea.style.backgroundColor = "";
+      if (item.background === "dark") els.previewArea.classList.add("dark");
+      if (item.background === "light") els.previewArea.classList.add("light");
+
+      if (item.kind === "font") {
+        els.previewArea.style.backgroundImage = "none";
+        els.previewArea.style.backgroundColor = "#ffffff";
+        els.previewArea.innerHTML = `${renderFontFace(item)}<div id="modalFontPreview" class="modal-font-preview" style="font-family:'${escapeAttr(item.fontFamily)}', Segoe UI, sans-serif;">1 2 3 4 5 6 7 8 9 0</div>`;
+        requestAnimationFrame(fitModalFontPreview);
+      } else if (item.previewUrl) {
+        els.previewArea.innerHTML = `<img src="${escapeAttr(item.previewUrl)}" alt="${escapeAttr(item.name)}">`;
+      } else {
+        els.previewArea.innerHTML = `<div class="empty-state"><h3>No preview available</h3><p>This file can still be downloaded below.</p></div>`;
+      }
+
+      els.previewDownloads.innerHTML = item.files.map(file => `
+        <a class="download-link" href="${escapeAttr(file.url)}" target="_blank" rel="noopener" download>
+          <i class="iconoir-download"></i>Download ${escapeHtml(file.label)}
+        </a>
+      `).join("");
+
+      els.previewBackdrop.classList.add("open");
+      els.previewBackdrop.setAttribute("aria-hidden", "false");
+    }
+
+    function closePreview() {
+      els.previewBackdrop.classList.remove("open");
+      els.previewBackdrop.setAttribute("aria-hidden", "true");
+      els.previewArea.innerHTML = "";
+      els.previewDownloads.innerHTML = "";
+    }
+
+    function renderFontFace(item) {
+      if (!item.fontUrl) return "";
+      return `<style>@font-face{font-family:'${escapeCss(item.fontFamily)}';src:url('${escapeCssUrl(item.fontUrl)}');font-display:swap;}</style>`;
+    }
+
+    function getColors(team) {
+      return [1,2,3,4].map(number => {
+        const hex = toHex(team[`teamColor${number}`]);
+        return hex ? { label: number === 1 ? "Primary color" : `Secondary color ${number - 1}`, hex } : null;
+      }).filter(Boolean);
+    }
+
+    function getTeamName(team) {
+      return team.teamFullName || team.teamCommonName || team.teamPlaceName || team.teamAbv || "Unnamed team";
+    }
+
+    function getTeamKey(team) {
+      return String(team.teamAbv || getTeamName(team)).trim();
+    }
+
+    function getTeamLogo(team) {
+      return firstUrl(team.logoPrimaryLightPNG, team.logoPrimaryDarkPNG, team.logoPrimaryLightSVG, team.logoPrimaryDarkSVG);
+    }
+
+    function getTeamLogoCandidates(team) {
+      return [team.logoPrimaryLightPNG, team.logoPrimaryLightSVG, team.logoPrimaryDarkPNG, team.logoPrimaryDarkSVG].filter(valueExists);
+    }
+
+    function getTeamDisplayLogo(team) {
+      return firstUrl(...getTeamLogoCandidates(team));
+    }
+
+    function renderTeamLogoImage(team, className = "", loading = "eager") {
+      const candidates = getTeamLogoCandidates(team);
+      if (!candidates.length) return `<i class="iconoir-folder"></i>`;
+      const [src, ...fallbacks] = candidates;
+      const fallbackAttr = fallbacks.length ? ` data-fallbacks="${escapeAttr(fallbacks.join("||"))}" onerror="handleTeamLogoError(this)"` : "";
+      const priority = loading === "eager" ? ` fetchpriority="high"` : "";
+      return `<img class="${escapeAttr(className)}" src="${escapeAttr(src)}" alt="" loading="${escapeAttr(loading)}"${priority} decoding="async"${fallbackAttr}>`;
+    }
+
+    function handleTeamLogoError(img) {
+      const fallbacks = String(img.dataset.fallbacks || "").split("||").filter(Boolean);
+      if (!fallbacks.length) return;
+      img.src = fallbacks.shift();
+      img.dataset.fallbacks = fallbacks.join("||");
+    }
+
+    function preloadTeamLogos() {
+      document.querySelectorAll('link[data-nhl-logo-preload="true"]').forEach(link => link.remove());
+      state.teams.forEach(team => {
+        getTeamLogoCandidates(team).slice(0, 1).forEach((url, index) => {
+          if (!url) return;
+          const image = new Image();
+          image.decoding = "async";
+          image.loading = "eager";
+          if ("fetchPriority" in image) image.fetchPriority = "high";
+          image.src = url;
+
+          if (index === 0) {
+            const link = document.createElement("link");
+            link.rel = "preload";
+            link.as = "image";
+            link.href = url;
+            link.setAttribute("data-nhl-logo-preload", "true");
+            document.head.appendChild(link);
+          }
+        });
+      });
+    }
+
+    function fitModalFontPreview() {
+      const preview = document.getElementById("modalFontPreview");
+      if (!preview) return;
+      const area = els.previewArea;
+      const availableWidth = Math.max(240, area.clientWidth - 80);
+      const availableHeight = Math.max(120, area.clientHeight - 80);
+      let size = Math.min(110, availableHeight * 0.42);
+      preview.style.fontSize = `${size}px`;
+      while ((preview.scrollWidth > availableWidth || preview.scrollHeight > availableHeight) && size > 22) {
+        size -= 2;
+        preview.style.fontSize = `${size}px`;
+      }
+    }
+
+    function firstUrl(...urls) {
+      return urls.find(valueExists) || "";
+    }
+
+    function valueExists(value) {
+      return value !== undefined && value !== null && String(value).trim() !== "";
+    }
+
+    function toHex(value) {
+      if (!valueExists(value)) return "";
+      let raw = String(value).trim().replace(/^#/, "");
+      if (/^[0-9a-fA-F]{3}$/.test(raw)) raw = raw.split("").map(ch => ch + ch).join("");
+      if (!/^[0-9a-fA-F]{6}$/.test(raw)) return "";
+      return `#${raw.toUpperCase()}`;
+    }
+
+    function readRecentTeams() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem("nhlBrandPortalRecentTeams") || "[]");
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function addRecentTeam(teamKey) {
+      state.recentTeams = [teamKey, ...state.recentTeams.filter(key => key !== teamKey)].slice(0, 10);
+      localStorage.setItem("nhlBrandPortalRecentTeams", JSON.stringify(state.recentTeams));
+    }
+
+    async function copyToClipboard(text, button) {
+      try {
+        await navigator.clipboard.writeText(text);
+        const original = button.innerHTML;
+        button.innerHTML = `<i class="iconoir-check"></i>Copied`;
+        setTimeout(() => button.innerHTML = original, 900);
+      } catch (error) {
+        window.prompt("Copy this value:", text);
+      }
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function escapeAttr(value) {
+      return escapeHtml(value).replaceAll("`", "&#096;");
+    }
+
+    function escapeCss(value) {
+      return String(value ?? "").replace(/[^a-zA-Z0-9_-]/g, "_");
+    }
+
+    function escapeCssUrl(value) {
+      return String(value ?? "").replace(/['\\()\n\r]/g, "");
+    }
+  </script>
+</body>
+</html>
